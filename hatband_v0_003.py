@@ -1,4 +1,6 @@
 import math
+import json
+import os
 
 version = "v0.0003"
 
@@ -7,7 +9,7 @@ def floor(x):
 
 class Hatband:
 
-    def __init__(self):
+    def __init__(self, storage_dir="hatband_storage", use_memory = False):
         self.categories = {
             # ... (Joshua Greenfield's categories definitions)
             'negative-nine-long': [],
@@ -214,61 +216,165 @@ class Hatband:
             'prefix-?!-medium': [],
             'prefix-?!-short': [],
         }
+        
+        self.storage_dir = storage_dir
+        self.use_memory = use_memory
+        if not self.use_memory:
+            os.makedirs(self.storage_dir, exist_ok=True)
 
+
+    def _get_file_path(self, location):
+        return os.path.join(self.storage_dir, f"{location}.json")
+    
 
     def hatband_insertL(self, record):
         location = record['hatband']
-        self.categories[location].insert(0, record)
-        return 0
+        if self.use_memory:
+            if location not in self.categories:
+                self.categories[location] = []
+            self.categories[location].insert(0, record)
+            return 0
+        else:
+            file_path = self._get_file_path(location)
+            data = self._load_data(file_path)
+            data.insert(0, record)
+            self._save_data(file_path, data)
+            return 0
+
+    def _load_data(self, file_path):
+        data = []
+        if os.path.exists(file_path):
+            try:
+                with open(file_path, "r") as f:
+                    data = json.load(f)
+                print(f"Debug: Loaded data from {file_path}: {data}")
+            except json.JSONDecodeError:
+                print(f"Debug: Error decoding JSON in {file_path}")
+        else:
+            print(f"DEBUGGING | File not found | {file_path}")
+        return data
+        
+    def _save_data(self, file_path, data):
+        try:
+            with open(file_path, "w") as f:
+                json.dump(data, f, indent=4)
+            print(f"""DEBUGGING | Saved data to {file_path}: 
+                  
+                  {data}
+                  
+                  """)
+        except Exception as e:
+            print(f"DEBUGGING | Error saving data to {file_path}: {e}")
 
 
     def hatband_insertR(self, record):
         location = record['hatband']
-        self.categories[location].append(record)
-        return len(self.categories[location]) - 1
+        if self.use_memory:
+            if location not in self.categories:
+                self.categories[location] = []
+            self.categories[location].append(record)
+            return len(self.categories[location]) - 1
+        else:
+            file_path = self._get_file_path(location)
+            data = self._load_data(file_path)
+            data.append(record)
+            self._save_data(file_path, data)
+            return len(data) - 1
 
 
     def hatband_insertM(self, record):
         location = record['hatband']
-        location_length = len(self.categories[location])
-        print(f"Location Length: {location_length}")
-        if location_length <= 2:
-            index = location_length // 2
-            print(f"Calculated Index: {index}")
-            self.categories[location].insert(index, record)
-            return floor(index)
-        elif location_length > 2:
-            index = (location_length - 1) // 2
-            print(f"Calculated Index: {index}")
-            self.categories[location].insert(index, record)
-            return floor(index)
+        if self.use_memory:
+            location_length = len(self.categories[location])
+            print(f"Location Length: {location_length}")
+            if location_length == 0:
+                index = 0
+                self.categories[location].insert(index, record)
+                return 0
+            elif location_length % 2 == 0:
+                index = location_length // 2
+                print(f"Calculated Index: {index}")
+                self.categories[location].insert(index, record)
+                return index
+            else:
+                index = location_length // 2 + 1
+                print(f"Calculated Index: {index}")
+                self.categories[location].insert(index, record)
+                return index
         else:
-            return None
-        
+            file_path = self._get_file_path(location)
+            data = self._load_data(file_path)
+            location_length = len(data)
+            print(f"Location Length: {location_length}")
+            if location_length == 0:
+                index = 0
+                data.insert(index, record)
+                self._save_data(file_path, data)
+                return 0
+            elif location_length % 2 == 0:
+                index = location_length // 2
+                print(f"Calculated Index: {index}")
+                data.insert(index, record)
+                self._save_data(file_path, data)
+                return floor(index)
+            else:
+                index = location_length // 2 + 1
+                print(f"Calculated Index: {index}")
+                data.insert(index, record)
+                self._save_data(file_path, data)
+                return index
+
 
     def hatband_retrieve(self, location, key, index=None):
-        last_index = len(self.categories[location]) - 1
+        if self.use_memory:
+            last_index = len(self.categories[location]) - 1
 
-        if 0 > last_index:
-            return {}, -1
-        
-        elif index is not None:
-            target = self.categories[location][index]
-            if target.get('key') == key:
-                return target, index
-            else:
-                for i in range(index, last_index + 1):
+            if 0 > last_index:
+                return {}, -1
+            
+            elif index is not None:
+                target = self.categories[location][index]
+                if target.get('key') == key:
+                    return target, index
+                else:
+                    for i in range(index, last_index + 1):
+                        target = self.categories[location][i]
+                        if target.get('key') == key:
+                            return target, i
+                        
+                    return {}, -1
+                
+            elif index is None:
+                for i in range(last_index + 1):
                     target = self.categories[location][i]
                     if target.get('key') == key:
                         return target, i
                     
                 return {}, -1
-            
-        elif index is None:
-            for i in range(last_index + 1):
-                target = self.categories[location][i]
+        else:
+            file_path = self._get_file_path(location)
+            data = self._load_data(file_path)
+            last_index = len(data) - 1
+            if 0 > last_index:
+                return {}, -1
+            elif index is not None:
+                if index > last_index:
+                    return {}, -1
+                target = data[index]
                 if target.get('key') == key:
-                    return target, i
-                
-            return {}, -1
+                    return target, index
+                else:
+                    for i in range(index, last_index + 1):
+                        target = data[i]
+                        if target.get('key') == key:
+                            return target, i
+                    return {}, -1
+            elif index is None:
+                for i in range(len(data)):
+                    target = data[i]
+                    if target.get('key') == key:
+                        return target, i
+                return {}, -1
+            
+        
         

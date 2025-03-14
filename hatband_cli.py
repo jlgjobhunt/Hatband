@@ -11,9 +11,14 @@ HATBAND_FILE = 'hatband.pkl'
 def load_hatband():
     print("Loading hatband.")
     if os.path.exists(HATBAND_FILE):
-        with open(HATBAND_FILE, 'rb') as f:
-            print("Hatband loaded.")
-            return pickle.load(f)
+        try:
+            with open(HATBAND_FILE, 'rb') as f:
+                print("Hatband loaded.")
+                return pickle.load(f)
+        except Exception as e:
+            print(f"Error loading hatband: {e}")
+            print("Creating new hatband.")
+            return Hatband()
     else:
         print("New hatband created.")
         return Hatband()
