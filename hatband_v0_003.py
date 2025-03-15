@@ -9,7 +9,11 @@ def floor(x):
 
 class Hatband:
 
-    def __init__(self, storage_dir="hatband_storage", use_memory = False):
+    def __init__(self, storage_dir="hatband_storage", use_memory=False):
+        self.storage_dir = storage_dir
+        self.use_memory = use_memory
+        if not self.use_memory:
+            os.makedirs(self.storage_dir, exist_ok=True)
         self.categories = {
             # ... (Joshua Greenfield's categories definitions)
             'negative-nine-long': [],
@@ -216,11 +220,41 @@ class Hatband:
             'prefix-?!-medium': [],
             'prefix-?!-short': [],
         }
-        
-        self.storage_dir = storage_dir
-        self.use_memory = use_memory
         if not self.use_memory:
-            os.makedirs(self.storage_dir, exist_ok=True)
+            self.load_all_hatbands()
+        
+
+    def load_all_hatbands(self):
+        if self.use_memory:
+            return
+        if not os.path.exists(self.storage_dir):
+            os.makedirs(self.storage_dir)
+
+        for filename in os.listdir(self.storage_dir):
+            hatband_name = filename[:-5]
+            self.categories[hatband_name] = self.load_hatband_from_file(hatband_name)
+
+
+    def load_hatband_from_file(self, hatband_name):
+        filepath = os.path.join(self.storage_dir, f"{hatband_name}.json")
+        if os.path.exists(filepath):
+            with open(filepath,'r') as f:
+                try:
+                    data = json.load(f)
+                    print(f"DEBUGGING | Loaded data from {filepath} | {data}")
+                    return data
+                except json.JSONDecodeError:
+                    print(f"DEBUGGING | {filepath} contains invalid JSON or is empty. Returning empty list.")
+                    return []
+        return []
+
+    def save_hatband_to_file(self, hatband_name, data):
+        if self.use_memory:
+            return
+        filepath = os.path.join(self.storage_dir, f"{hatband_name}.json")
+        with open(filepath, 'w') as f:
+            json.dump(data, f, indent=4)
+            print(f"DEBUGGING | Saved data from {filepath}:\n\n{json.dumps(data, indent=4)}\n\n")
 
 
     def _get_file_path(self, location):
@@ -228,18 +262,14 @@ class Hatband:
     
 
     def hatband_insertL(self, record):
-        location = record['hatband']
-        if self.use_memory:
-            if location not in self.categories:
-                self.categories[location] = []
-            self.categories[location].insert(0, record)
+        hatband_top_level_name = record['hatband']
+        if hatband_top_level_name not in self.categories:
+                self.categories[hatband_top_level_name] = []
+        self.categories[hatband_top_level_name].insert(0, record)
+        if not self.use_memory:
+            self.save_hatband_to_file(hatband_name, self.categories[hatband_name])
             return 0
-        else:
-            file_path = self._get_file_path(location)
-            data = self._load_data(file_path)
-            data.insert(0, record)
-            self._save_data(file_path, data)
-            return 0
+
 
     def _load_data(self, file_path):
         data = []
