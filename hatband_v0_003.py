@@ -231,12 +231,12 @@ class Hatband:
             os.makedirs(self.storage_dir)
 
         for filename in os.listdir(self.storage_dir):
-            hatband_name = filename[:-5]
-            self.categories[hatband_name] = self.load_hatband_from_file(hatband_name)
+            hatband_top_level_name = filename[:-5]
+            self.categories[hatband_top_level_name] = self.load_hatband_from_file(hatband_top_level_name)
 
 
-    def load_hatband_from_file(self, hatband_name):
-        filepath = os.path.join(self.storage_dir, f"{hatband_name}.json")
+    def load_hatband_from_file(self, hatband_top_level_name):
+        filepath = os.path.join(self.storage_dir, f"{hatband_top_level_name}.json")
         if os.path.exists(filepath):
             with open(filepath,'r') as f:
                 try:
@@ -248,10 +248,10 @@ class Hatband:
                     return []
         return []
 
-    def save_hatband_to_file(self, hatband_name, data):
+    def save_hatband_to_file(self, hatband_top_level_name, data):
         if self.use_memory:
             return
-        filepath = os.path.join(self.storage_dir, f"{hatband_name}.json")
+        filepath = os.path.join(self.storage_dir, f"{hatband_top_level_name}.json")
         with open(filepath, 'w') as f:
             json.dump(data, f, indent=4)
             print(f"DEBUGGING | Saved data from {filepath}:\n\n{json.dumps(data, indent=4)}\n\n")
@@ -267,7 +267,7 @@ class Hatband:
                 self.categories[hatband_top_level_name] = []
         self.categories[hatband_top_level_name].insert(0, record)
         if not self.use_memory:
-            self.save_hatband_to_file(hatband_name, self.categories[hatband_name])
+            self.save_hatband_to_file(hatband_top_level_name, self.categories[hatband_top_level_name])
             return 0
 
 
