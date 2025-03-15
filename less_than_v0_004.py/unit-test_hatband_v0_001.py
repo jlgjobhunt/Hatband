@@ -9,8 +9,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from hatband_v0_001 import Hatband
 
 
-
 class TestHatband(unittest.TestCase):
+
+    version = "v0.001"
 
     def setUp(self):
         self.hatband = Hatband()

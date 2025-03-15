@@ -1,3 +1,9 @@
+# hatband_v0.py
+# This is a copy of Joshua Greenfield's original Hatband
+# taken from a Jupyter Notebook before getting double whammied
+# by hurricanes in Fall 2024 in Tampa Bay, FL.
+# This was seemingly perfect for my project with Rochelle Gemma if it only
+# had the work put into it.
 
 hatband = {   
     'negative-nine-long': [],

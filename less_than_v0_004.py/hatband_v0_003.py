@@ -2,12 +2,14 @@ import math
 import json
 import os
 
-version = "v0.0003"
+
 
 def floor(x):
     return math.floor(x)
 
 class Hatband:
+
+    version = "v0.003"
 
     def __init__(self, storage_dir="hatband_storage", use_memory=False):
         self.storage_dir = storage_dir

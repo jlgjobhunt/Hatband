@@ -1,11 +1,6 @@
-import math
-
-version = "v0.0002"
-
-def floor(x):
-    return math.floor(x)
-
 class Hatband:
+
+    version = "v0.001"
 
     def __init__(self):
         self.categories = {
@@ -231,19 +226,12 @@ class Hatband:
     def hatband_insertM(self, record):
         location = record['hatband']
         location_length = len(self.categories[location])
-        print(f"Location Length: {location_length}")
-        if location_length <= 2:
-            index = location_length // 2
-            print(f"Calculated Index: {index}")
-            self.categories[location].insert(index, record)
-            return floor(index)
-        elif location_length > 2:
-            index = (location_length - 1) // 2
-            print(f"Calculated Index: {index}")
-            self.categories[location].insert(index, record)
-            return floor(index)
-        else:
-            return None
+        if location_length > 2 and location_length % 2 == 0:
+            self.categories[location].insert(int((location_length) / 2), record)
+            return int(location_length / 2)
+        elif location_length > 2 and location_length % 2 == 1:
+            self.categories[location].insert(int((location_length - 1) / 2), record)
+            return int((location_length - 1) / 2)
         
 
     def hatband_retrieve(self, location, key, index=None):

@@ -7,13 +7,13 @@ import json
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from hatband_v0_003 import Hatband, floor
-
+from hatband_v0_004 import Hatband, floor
 
 # PLEASE ABIDE: Two spaces between regardless of PEP, FLAKE, or some whore dominatrix.
 
 class TestHatband(unittest.TestCase):
 
+    version = "v0.004"
 
     """
     def setUp(self):
