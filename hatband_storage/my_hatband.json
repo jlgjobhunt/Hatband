@@ -1,0 +1,12 @@
+[
+    {
+        "hatband": "my_hatband",
+        "key": "another_key",
+        "value": "another_value"
+    },
+    {
+        "hatband": "my_hatband",
+        "key": "my_key",
+        "value": "my_value"
+    }
+]
