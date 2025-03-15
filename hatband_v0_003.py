@@ -286,26 +286,33 @@ class Hatband:
         location = record['hatband']
         if self.use_memory:
             location_length = len(self.categories[location])
-            print(f"Location Length: {location_length}")
+            print(f"Location Length: {location_length}, Type: {type(location_length)}")
+            modulo_result = location_length % 2
+            print(f"Modulo Result: {modulo_result}, Type: {type(modulo_result)}")
             if location_length == 0:
                 index = 0
                 self.categories[location].insert(index, record)
                 return 0
-            elif location_length % 2 == 0:
+            elif modulo_result == 0:
                 index = location_length // 2
                 print(f"Calculated Index: {index}")
+                print(f"Index to return: {index}")
                 self.categories[location].insert(index, record)
                 return index
             else:
                 index = location_length // 2 + 1
                 print(f"Calculated Index: {index}")
+                print(f"Index to return: {index}")
                 self.categories[location].insert(index, record)
                 return index
         else:
             file_path = self._get_file_path(location)
             data = self._load_data(file_path)
             location_length = len(data)
-            print(f"Location Length: {location_length}")
+            print(f"Location Length: {location_length}, Type: {type(location_length)}")
+            modulo_result = location_length % 2
+            print(f"Modulo Result: {modulo_result}, Type: {type(modulo_result)}")
+            
             if location_length == 0:
                 index = 0
                 data.insert(index, record)
@@ -314,12 +321,14 @@ class Hatband:
             elif location_length % 2 == 0:
                 index = location_length // 2
                 print(f"Calculated Index: {index}")
+                print(f"Index to return: {index}")
                 data.insert(index, record)
                 self._save_data(file_path, data)
-                return floor(index)
+                return index
             else:
                 index = location_length // 2 + 1
                 print(f"Calculated Index: {index}")
+                print(f"Index to return: {index}")
                 data.insert(index, record)
                 self._save_data(file_path, data)
                 return index

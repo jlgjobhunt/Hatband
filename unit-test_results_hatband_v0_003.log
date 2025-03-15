@@ -1,0 +1,90 @@
+Debug: Loaded data from test_hatband_storage/a-short.json: []
+DEBUGGING | Saved data to test_hatband_storage/a-short.json: 
+                  
+                  [{'key': 'test', 'value': 'data', 'hatband': 'a-short'}]
+                  
+                  
+Debug: Loaded data from test_hatband_storage/a-short.json: [{'key': 'test', 'value': 'data', 'hatband': 'a-short'}]
+DEBUG: data=[{'key': 'test', 'value': 'data', 'hatband': 'a-short'}]
+Debug: Loaded data from test_hatband_storage/d-short.json: [{'key': '1', 'value': 'data1', 'hatband': 'd-short'}, {'key': '2', 'value': 'data2', 'hatband': 'd-short'}]
+Location Length: 2, Type: <class 'int'>
+Modulo Result: 0, Type: <class 'int'>
+Calculated Index: 1
+Index to return: 1
+DEBUGGING | Saved data to test_hatband_storage/d-short.json: 
+                  
+                  [{'key': '1', 'value': 'data1', 'hatband': 'd-short'}, {'key': '3', 'value': 'data3', 'hatband': 'd-short'}, {'key': '2', 'value': 'data2', 'hatband': 'd-short'}]
+                  
+                  
+Debug: Loaded data from test_hatband_storage/a-short.json: []
+Location Length: 0, Type: <class 'int'>
+Modulo Result: 0, Type: <class 'int'>
+DEBUGGING | Saved data to test_hatband_storage/a-short.json: 
+                  
+                  [{'key': 'test', 'value': 'data', 'hatband': 'a-short'}]
+                  
+                  
+Data before insert: [{'key': '1', 'value': 'data1', 'hatband': 'd-short'}, {'key': '2', 'value': 'data2', 'hatband': 'd-short'}]
+Debug: Loaded data from test_hatband_storage/d-short.json: [{'key': '1', 'value': 'data1', 'hatband': 'd-short'}, {'key': '2', 'value': 'data2', 'hatband': 'd-short'}]
+Location Length: 2, Type: <class 'int'>
+Modulo Result: 0, Type: <class 'int'>
+Calculated Index: 1
+Index to return: 1
+DEBUGGING | Saved data to test_hatband_storage/d-short.json: 
+                  
+                  [{'key': '1', 'value': 'data1', 'hatband': 'd-short'}, {'key': '3', 'value': 'data3', 'hatband': 'd-short'}, {'key': '2', 'value': 'data2', 'hatband': 'd-short'}]
+                  
+                  
+Debug: Loaded data from test_hatband_storage/e-medium.json: [{'key': '1', 'value': 'data1', 'hatband': 'e-medium'}, {'key': '2', 'value': 'data2', 'hatband': 'e-medium'}, {'key': '3', 'value': 'data3', 'hatband': 'e-medium'}]
+Data before insert: [{'key': '1', 'value': 'data1', 'hatband': 'e-medium'}, {'key': '2', 'value': 'data2', 'hatband': 'e-medium'}, {'key': '3', 'value': 'data3', 'hatband': 'e-medium'}]
+Debug: Loaded data from test_hatband_storage/e-medium.json: [{'key': '1', 'value': 'data1', 'hatband': 'e-medium'}, {'key': '2', 'value': 'data2', 'hatband': 'e-medium'}, {'key': '3', 'value': 'data3', 'hatband': 'e-medium'}]
+Location Length: 3, Type: <class 'int'>
+Modulo Result: 1, Type: <class 'int'>
+Calculated Index: 2
+Index to return: 2
+DEBUGGING | Saved data to test_hatband_storage/e-medium.json: 
+                  
+                  [{'key': '1', 'value': 'data1', 'hatband': 'e-medium'}, {'key': '2', 'value': 'data2', 'hatband': 'e-medium'}, {'key': 4, 'value': 'data4', 'hatband': 'e-medium'}, {'key': '3', 'value': 'data3', 'hatband': 'e-medium'}]
+                  
+                  
+Debug: Loaded data from test_hatband_storage/a-short.json: []
+DEBUGGING | Saved data to test_hatband_storage/a-short.json: 
+                  
+                  [{'key': 'test', 'value': 'data', 'hatband': 'a-short'}]
+                  
+                  
+Debug: Loaded data from test_hatband_storage/simple-test.json: []
+DEBUGGING | Saved data to test_hatband_storage/simple-test.json: 
+                  
+                  [{'key': 'simple', 'value': 'test', 'hatband': 'simple-test'}]
+                  
+                  
+DEBUGGING: index=0
+Debug: Loaded data from test_hatband_storage/a-short.json: []
+DEBUGGING | Saved data to test_hatband_storage/a-short.json: 
+                  
+                  [{'key': 'test', 'value': 'data', 'hatband': 'a-short'}]
+                  
+                  
+Debug: Loaded data from test_hatband_storage/a-short.json: [{'key': 'test', 'value': 'data', 'hatband': 'a-short'}]
+Debug: Loaded data from test_hatband_storage/a-short.json: []
+DEBUGGING | Saved data to test_hatband_storage/a-short.json: 
+                  
+                  [{'key': 'test', 'value': 'data', 'hatband': 'a-short'}]
+                  
+                  
+Debug: Loaded data from test_hatband_storage/a-short.json: [{'key': 'test', 'value': 'data', 'hatband': 'a-short'}]
+Debug: Loaded data from test_hatband_storage/f-long.json: [{'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}]
+DEBUGGING | Saved data to test_hatband_storage/f-long.json: 
+                  
+                  [{'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}]
+                  
+                  
+Debug: Loaded data from test_hatband_storage/f-long.json: [{'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}, {'key': 'test', 'value': 'data', 'hatband': 'f-long'}]
+DEBUGGING | File not found | test_hatband_storage/g-short.json
+Debug: Loaded data from test_hatband_storage/h-medium.json: [{'key': '1', 'value': 'data1', 'hatband': 'h-medium'}, {'key': '2', 'value': 'data2', 'hatband': 'h-medium'}]
+DEBUGGING | File not found | test_hatband_storage/i-long.json
+Location Length: 2, Type: <class 'int'>
+Modulo Result: 0, Type: <class 'int'>
+Calculated Index: 1
+Index to return: 1
