@@ -36,6 +36,7 @@ class TestHatband(unittest.TestCase):
         self.hatbandMem = Hatband(use_memory=True)
         self.hatbandFile._data = {}
         self._reset_test_files()
+        self.hatbandFile.reset_data()
 
 
     def _reset_test_files(self):

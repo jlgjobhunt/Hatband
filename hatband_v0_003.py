@@ -268,8 +268,10 @@ class Hatband:
         self.categories[hatband_top_level_name].insert(0, record)
         if not self.use_memory:
             self.save_hatband_to_file(hatband_top_level_name, self.categories[hatband_top_level_name])
-            return 0
+        return 0
 
+    def reset_data(self):
+        self._data = {}
 
     def _load_data(self, file_path):
         data = []

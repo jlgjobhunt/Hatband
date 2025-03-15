@@ -1,0 +1,34 @@
+
+
+Testing Each Feature:
+
+insertl (Insert Left):
+
+Enter the following command:
+insertl --hatband-name test_hatband --key key1 --value value1 --storage-dir hatband_storage
+Verify that you see "Inserted at index: 0".
+Repeat with different keys and values.
+insertr (Insert Right):
+
+Enter the following command:
+insertr --hatband-name test_hatband --key key2 --value value2 --storage-dir hatband_storage
+Verify that you see "Insert at index: 1".
+Repeat with different keys and values.
+insertm (Insert Middle):
+
+Enter the following command:
+insertm --hatband-name test_hatband --key key3 --value value3 --storage-dir hatband_storage
+Verify that you see "Inserted at index: 1".
+Repeat with different keys and values.
+retrieve (Retrieve Record):
+
+Enter the following command:
+retrieve --hatband-name test_hatband --key key2 --storage-dir hatband_storage
+Verify that you see the retrieved record and its index.
+Try retrieving a record that doesn't exist.
+Try retrieving a record by index:
+retrieve --hatband-name test_hatband --key key2 --index 1 --storage-dir hatband_storage
+list_records (List Records):
+
+Enter the following command:
+list_records --hatband-name test_hatband --storage-dir hatband_storage

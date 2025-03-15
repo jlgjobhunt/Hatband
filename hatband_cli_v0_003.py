@@ -1,4 +1,5 @@
 import click
+import sys
 import pickle
 import os
 
@@ -85,20 +86,23 @@ def retrieve(hatband_name, key, index, storage_dir):
 @hatband_group.command()
 @click.option('--hatband-name', required=True, help='Hatband category')
 @click.option('--storage-dir', default='hatband_storage', help='Storage directory')
-def list_records(hatband_name, storage_dir):
+def list_records(hatband_name, storage_dir='hatband_storage'):
+    click.echo(f"Hatband name: {hatband_name}, Storage dir: {storage_dir}")
+
     try:
         """
         Lists all records in a given category.
         """
         hatband = Hatband(storage_dir=storage_dir)
-        records = hatband.categories[hatband_name]
+        records = hatband.categories.get(hatband_name)
         if records:
-            for record in records:
-                click.echo(record)
+                for record in records:
+                    click.echo(record)
         else:
-            click.echo("No records found.")    
+            click.echo("No records found.")
+
     except Exception as e:
-        click.echo(f"Error: {e}")
+            click.echo(f"Error: {e}")
 
 def run_interactive_cli():
     hatband = Hatband()
@@ -111,7 +115,7 @@ def run_interactive_cli():
             if command_str.lower() == "exit":
                 break
 
-            # Try to invoke Click.
+
             try:
                 hatband_group(command_str.split())
             except click.exceptions.NoSuchOption as e:
@@ -127,5 +131,9 @@ def run_interactive_cli():
     click.echo("Goodbye!")
 
 if __name__ == '__main__':
-    run_interactive_cli()
+    if len(sys.argv) > 1:
+        print(click.get_current_context().command_path if click.has_current_context() else "No Click context")
+        hatband_group()
+    else:
+        run_interactive_cli()
 
