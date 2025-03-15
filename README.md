@@ -75,7 +75,6 @@ The end result will be the ability to Kaggle Competition and other Data Pipeline
 
 Rochelle means 'rock' and Rochelle Gemma is the rock that two of my current repositories under development are wrapped around. This work then composes into work that might have general audience appeal and monetization possibilities. Yet, it all being boostrapped, I would need a hot dog cart or an e-commerce business to ever raise the capital ($4 million USD) needed to guarantee a market making success at a 2% conversion rate (of an already out of R & D and finishing touches on product). 
 
-
 ------------------------------------
 
 
