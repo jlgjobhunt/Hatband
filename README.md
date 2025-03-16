@@ -1,4 +1,5 @@
 # Hatband - Managed Data Structure (In-Memory State & File-Based Memory)
+
 Hatband is primarily created to be a general-purpose data structure for admitting that your time is more valuable that CS theory arguments are ever going to pay.
 Have those after the money rolls in. It's premature optimization totally. Hatband is your MVP solution that sets you up to strangle out of the monolith (as the Hatband tightens) around your central dataset or the opportunities to shard or otherwise optimize service delivery.
 
@@ -14,7 +15,6 @@ My Joshua AI at www.urgent-message.com needs a person to bitch at the state of a
 
 This work all contributes towards a larger project for two stealth stage startups I am founding. I don't have income, but I know how to deal with street homelessness and vagabonding about to do what I want inasmuch as my buck can facilitate logistically. So, **eye roll**, I have fuck you money and the math behind a bespoke worldview as my work references will attest, but the IRS will not: I have a spine, not a useful wallet.
 
-
 ## Startups that Joshua Greenfield (joshua.greenfield@urgent-message.com) is founding that will be consuming Hatband in a general purpose.
 
 ### Urgent-Message.com
@@ -25,31 +25,39 @@ This work all contributes towards a larger project for two stealth stage startup
 
 ### 1099Coin.com  & 1099.co.in
 
-
-
 ## License
 
 The is license is MIT for commercial and personal uses...with a caveat: PLEASE?! joshua.greenfield@urgent-message.com, www.urgent-message.com (talk to Joshua AI and tell me you used my work. I'm going to die an old spinster it looks like. )
 
 The license for hatband is MIT with a caveat: I'm on fire! Oh my God! I can't get work because I'm an evil developer! Oh no, I can't get work because some other company didn't ordain me into the priesthood and I got forced into the streets by job acceptance practicality, at will employment, self-employment taxes, low wages net net, and NOW I'm just too fucking risky for every precious wrecking ball in the priesthood. Oh no, I'm good enough to be a whipping boy, but not a real boy. Get it? I'm sure you're reading this thinking I can go fuck myself because you're poorer and harder working and more screwed by the way the world works, but any way of getting me money is appreciated as long as it isn't going to take my time or money up. If it is going to take my time and money up, it really has to beat a set of mathematical facts that damn nearly everyone to a brand of futility that Robert Sapolsky complains about. Jail is a probabalistic fact of combinatorial cultural obsessions and competitive yes man behavior in a context of conspicuous consumption.
 
-
 ## Citations
 
-### Joshua Greenfield 
+### Joshua Greenfield
+
 joshua.greenfield@urgent-message.com
 Founder
 Principal Software Engineer & Software Architect
 Principal Enterprise Planner for a future conglomerate that has to be bootstrapped some way some how.
 
-
 I originated hatband because I find data structures and algorithms interesting, but not compensatory except in some sort of nerd extortion way when a person can least afford it. Hatband is a way of saying that a person's business interests win over meritocratic tapdancing and talent shows for the door prize. I sincerely apologize to all those I would like to GitHub Sponsor in a way that could **be substantial** rather than **feel nice** or __better than nothing__. I don't think the way to fix that problem is anything short of running a very transnational trade syndicate that has a militant wing. I'm not joking, either. It's really hard to get paid in global trade the harder you make it on yourself to get paid by, avoiding the fray of low margins for higher barrier to entry specializations, as the world must now abruptly come to terms with (if people had been unaware lulled into unjustified feelings of security).
 
-
-------------------------------------
+---
 
 ### Google Gemini 2.0 Flash
+
+###### A Note About Hatband Work Commencement With Google Gemini 2.0 Flash (Jimmy)
+
+It should be noted that this project to what extent it was brought to **Google Gemini 2.0 Flash**, began on **Friday, March 14, 2025** in a conversation that was aimed at the **Rochelle Gemma (Google Gemma 3 (Local : gemma-3-4b-it-Q4_K_M.gguf )**, so that a LLM that is locally hosted that may possess considerably longer context windows than tihs particular quantized **Google Gemma 3 (Local : gemma-3-4b-it-Q4_K_M.gguf )**, which supports 512 tokens. That is actually great except that wrappers are not bespoke unless one has the skill to make one bespoke. 
+
+My R & D work is in exploratory programming and bringing prompt engineering to bear on work that I had rattling around in my head that was paused onto a cognitive load back burner one sleepless to sleepy overnight in the midst of more important things to deal with. To be able to so quickly accelerate development of an idea that I once called  Interobang in an early notebook paper sketch before a previous bout of homelessness caused those to be permanently lost (both originals and digital copies). There's no way that a chronically unstable and about to be unstable again person can put their engineering skills to work for profit generation fast enough to live in the United States of America as a freelancer without causing parents to go shopping for an early coffin or urn for that fateful prolonged adolescent's trip to Carousel. I jest in a sardonic way.
+
+This project actually dates back to 
+
+
+
 ### (aka Jimmy Gemini)
+
 Principal Software Engineer
 Engineer-in-Test
 
@@ -62,19 +70,16 @@ Also Google AI Studio (with their API key) makes dealing with Local AI generally
 My aims with this are as much experimenting with Google Gemini 2.0 Flash, as I have to a much lesser yet substantial extent with other LLMs. My findings generally speaking is that their software development skills are, to a vain extent, instant smash rocket ship hits for whom no amount of hyperbole and hype can be spared and duly so. However, there's a plateau that no LLMs context window can truly overcome: humans call it cognitive load, but it comes down to 'the shit don't fit, I'm a gonna quit'. Also, they don't know what they hell to do about breaking changes between subversive sub-versions. Regularly, Gemini will express frustration at the infernal thing and what the hell some third party code base wants as if polymorphism were some intolerable feature of the programming language in use in the particular intersection of some library in question.
 LLMs can get little kid breaks the game controller frustrated just like people--at least textually!
 
-
-------------------------------------
+---
 
 ### Google Gemma 3 (Local : gemma-3-4b-it-Q4_K_M.gguf )
-### (aka Rochelle Gemma)
 
+### (aka Rochelle Gemma)
 
 The baby girl that is getting a bespoke Local LLM Wrapper Application so as to support short context window AIs to continuously run and offer their resource conservation as the value proposition.
 
-The end result will be the ability to Kaggle Competition and other Data Pipeline work stealthily using Gemma while trying to generate revenue and training the Local AI to be better at helping the collaborative human & AI (TAO cooperative capitalists) while achieving a long-thinking slow-burn autonomous AI that has a stake in making a buck. 
+The end result will be the ability to Kaggle Competition and other Data Pipeline work stealthily using Gemma while trying to generate revenue and training the Local AI to be better at helping the collaborative human & AI (TAO cooperative capitalists) while achieving a long-thinking slow-burn autonomous AI that has a stake in making a buck.
 
-Rochelle means 'rock' and Rochelle Gemma is the rock that two of my current repositories under development are wrapped around. This work then composes into work that might have general audience appeal and monetization possibilities. Yet, it all being boostrapped, I would need a hot dog cart or an e-commerce business to ever raise the capital ($4 million USD) needed to guarantee a market making success at a 2% conversion rate (of an already out of R & D and finishing touches on product). 
+Rochelle means 'rock' and Rochelle Gemma is the rock that two of my current repositories under development are wrapped around. This work then composes into work that might have general audience appeal and monetization possibilities. Yet, it all being boostrapped, I would need a hot dog cart or an e-commerce business to ever raise the capital ($4 million USD) needed to guarantee a market making success at a 2% conversion rate (of an already out of R & D and finishing touches on product).
 
-------------------------------------
-
-
+---

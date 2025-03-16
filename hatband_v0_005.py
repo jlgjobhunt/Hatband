@@ -8,7 +8,7 @@ def floor(x):
 
 class Hatband:
 
-    version = "v0.004"
+    version = "v0.005"
 
     def __init__(self, storage_dir="hatband_storage", use_memory=False):
         self.storage_dir = storage_dir

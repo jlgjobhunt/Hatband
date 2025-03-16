@@ -5,10 +5,10 @@ import os
 
 
 
-# Import Click group from hatband_cli_v0_003
+# Import Click group from hatband_cli_v0_004
 from hatband_cli_v0_004 import hatband_group
 
-print(os.path.abspath("hatband_cli_v0_003.py"))
+print(os.path.abspath("hatband_cli_v0_004.py"))
 
 HATBAND_STORAGE = "test_hatband_storage"
 

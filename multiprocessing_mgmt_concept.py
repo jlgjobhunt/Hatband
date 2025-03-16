@@ -70,3 +70,29 @@ if __name__ == '__main__':
     print(f'This array came from multiple processes forked from a worker process forked from the main process:\n{combined}')
     
     
+
+
+    # This is the plan for using multiprocessing and multithreading following
+    # a conversation between Joshua Greenfield and Jimmy Gemini 2.0 Flash.
+    """
+        Optimized CRUD Operations with Multiprocessing:
+        Priority: Implement multiprocessing to accelerate CRUD operations, particularly index key generation (single and batch).
+        Rationale: This directly addresses the performance bottlenecks and leverages available CPU resources.
+        Standardized Record Structure:
+        Priority: Enforce a consistent record structure with a derived index_key and value field.
+        Rationale: This ensures data consistency and efficient indexing.
+        Transaction History Log:
+        Priority: Implement a continuously running process that maintains a vector of recently accessed index_key values.
+        Rationale: This provides valuable introspection capabilities for analysis and optimization.
+        Periodic File Dumps for Transaction History:
+        Priority: Implement a mechanism to periodically dump the transaction history vector to an enumerated file.
+        Rationale: This ensures data durability and enables long-term analysis.
+        Read-Write Lock for Immutability:
+        Priority: Implement a read-write lock mechanism to enforce immutability after the initial write.
+        Rationale: This provides data integrity and enables concurrent read access.
+        Switchable Immutability:
+        Priority: Make the immutability feature switchable via configuration.
+        Rationale: This provides flexibility for different use cases.
+    """
+
+    
