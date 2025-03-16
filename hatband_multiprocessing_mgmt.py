@@ -29,8 +29,15 @@ class HatbandCommunicatorCLI:
 
     @hatband_communicator_group.command()
     @click.option('--command', required=True, help="Multiprocessing Hatband CLI Commands")
-    def command
-
+    def command(**args: list) -> string:
+        try:
+            extract = list
+            
+            for each in extract:
+                manipulatus = extract[each]
+                print(manipulatus)
+        except Exception as e:
+            click.echo(f"DEBUGGING | Error:\n\n{e}")
 
 # (above this line, the contents ought move to hatband_cli_multiprocessing_mgmt.py)
 # Line of demarcation between Hatband Multiprocessing MGMT CLI
