@@ -4,10 +4,12 @@ import pickle
 import os
 
 
-from hatband_v0_004 import Hatband
+from hatband_v0_005 import Hatband
+import hatband_multiprocessing_mgmt
+import hatband_multithreading_mgmt
 
 
-version = "v0.004"
+version = "v0.005"
 HATBAND_FILE = 'hatband.pkl'
 
 
