@@ -1,0 +1,33 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.7, pytest-8.3.4, pluggy-1.5.0
+rootdir: /home/mephibosheth/Development/Hatband
+plugins: typeguard-4.4.1, anyio-4.7.0, cov-6.0.0
+collected 16 items
+
+test_hatband_cli_list_records_v0_004.py ....                             [ 25%]
+test_hatband_cli_list_records_v0_005.py ....                             [ 50%]
+test_hatband_cli_multiprocessing_mgmt.py ..                              [ 62%]
+test_hatband_cli_multithreading_mgmt.py .                                [ 68%]
+test_hatband_record_v0_005.py .....                                      [100%]
+
+---------- coverage: platform linux, python 3.12.7-final-0 -----------
+Name                                       Stmts   Miss  Cover
+--------------------------------------------------------------
+__init__.py                                    0      0   100%
+hatband_cli_multiprocessing_mgmt.py           10      0   100%
+hatband_cli_multithreading_mgmt.py            21      1    95%
+hatband_cli_v0_004.py                        114     55    52%
+hatband_cli_v0_005.py                        114     55    52%
+hatband_record_v0_005.py                      22      0   100%
+hatband_v0_004.py                            172    135    22%
+hatband_v0_005.py                            173    154    11%
+test_hatband_cli_list_records_v0_004.py       34      0   100%
+test_hatband_cli_list_records_v0_005.py       34      0   100%
+test_hatband_cli_multiprocessing_mgmt.py      19      0   100%
+test_hatband_cli_multithreading_mgmt.py       28      0   100%
+test_hatband_record_v0_005.py                 32      0   100%
+--------------------------------------------------------------
+TOTAL                                        773    400    48%
+
+
+============================== 16 passed in 0.17s ==============================

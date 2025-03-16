@@ -32,7 +32,7 @@ class ReadWriteLock:
         with self._read_ready:
             self._readers -= 1
             if not self._readers:
-                self._read_ready.notifyAll()
+                self._read_ready.notify_all()
     
     def acquire_write(self):
         """Acquire a write lock."""
@@ -43,4 +43,4 @@ class ReadWriteLock:
     def release_write(self):
         """Release a write lock."""
         with self._read_ready:
-            self._read_ready.notifyAll()
+            self._read_ready.notify_all()

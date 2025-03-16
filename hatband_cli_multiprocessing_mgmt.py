@@ -6,13 +6,14 @@ Handles multiprocessing logic specific to the Hatband CLI. Includes functions fo
 """
 
 from multiprocessing import Pool
-from hatband_v0_005 import Record, derived_key, get_first_Nth_Chars_of_value
+from hatband_record_v0_005 import Record
 
 def generate_index_key(content_chunk):
     """
     Generates an index key for a single content chunk.
     """
-    return Record(content_chunk)['index_key']
+    record = Record(content_chunk)
+    return record.short_index_key
 
 
 def generate_batch_index_keys(content_chunks):

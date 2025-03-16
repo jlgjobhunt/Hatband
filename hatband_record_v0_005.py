@@ -1,16 +1,17 @@
 # hatband_record_v0_005.py
 
-import pytest
-
 class Record:
 
     version = "v0.005"
 
     def __init__(self, content_chunk):
+        if len(content_chunk) < 5:
+            raise ValueError("Content chunk must be at least 5 characters long.")
+
         self.content_chunk = content_chunk
         self.short_index_key = self._generate_short_index_key()
         self.medium_index_key = self._generate_medium_index_key()
-        self.long_index_key = self._generate_long_index()
+        self.long_index_key = self._generate_long_index_key()
         self.value = content_chunk
 
     def _generate_short_index_key(self):
@@ -40,3 +41,5 @@ class Record:
             'value': self.value
         }
     
+
+
