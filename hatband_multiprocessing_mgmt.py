@@ -1,8 +1,10 @@
+# hatband_multiprocessing_mgmt.py
 why = """
 ```markdown
-####    hatband_cli_multithreading_mgmt.py
-Handles multithreading logic specific to the Hatband CLI.
-Includes functions for concurrent read operations or I/O-bound tasks in the CLI.
-Manages thread synchronization and data protection.
+####    hatband_multithreading_mgmt.py
+Handles multiprocessing logic for the core Hatband class.
+Includes functions for parallelizing Hatband operations (e.g., index key generation, data processing).
+Manages communication between Hatband processes.
 ```
 """
+
