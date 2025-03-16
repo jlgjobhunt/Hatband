@@ -3,6 +3,7 @@ import json
 import os
 
 
+
 def floor(x):
     return math.floor(x)
 
@@ -418,5 +419,8 @@ class Hatband:
                         return target, i
                 return {}, -1
             
-        
-        
+
+
+
+def derived_key(content_chunk):
+    """"""
