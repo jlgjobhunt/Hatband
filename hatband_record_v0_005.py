@@ -1,6 +1,16 @@
 # hatband_record_v0_005.py
 
 class Record:
+    """
+    Represents a data record with generated index keys.
+
+    Attributes:
+        content_chunk (str): The content of the record.
+        short_index_key (str): A short index key (first 5 characters).
+        medium_index_key (str): A medium index key (first 25 characters).
+        long_index_key (str): A long index key (first 50 characters).
+        value (str): The content of the record.
+    """
 
     version = "v0.005"
 
@@ -27,7 +37,17 @@ class Record:
         return self._derive_key(self.content_chunk, length=50)
     
     def _derive_key(self, content_chunk, length):
-        """Derives a key of the specified length."""
+        """
+        Derives a key of the specified length by truncating the content chunk.
+        
+        Args:
+            content_chunk (str): The content chunk to derive the key from.
+            length (int): The desired length of the key.
+
+        Returns:
+            str: The derived key.    
+        
+        """
         if len(content_chunk) >= length:
             return content_chunk[:length]
         else:
@@ -40,6 +60,3 @@ class Record:
             'long_index_key': self.long_index_key,
             'value': self.value
         }
-    
-
-

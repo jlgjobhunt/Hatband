@@ -75,6 +75,20 @@ class HatbandCommunicatorCLI:
                 logging.error(f"File not found: {input_file}")
             except Exception as e:
                 logging.error("Input file is required.")
+        else:
+            logging.error("Input file is required.")
+
+    @hatband_communicator_group.command()
+    @click.option('--record-value', help="The value of the Hatband record to generate a key for.")
+    def generate_key(record_value):
+        """Generates an index key for a single Hatband record value."""
+        if record_value:
+            try:
+                index_key = generate_index_key(record_value)
+                print("Index Key:", index_key)
+            except Exception as e:
+                logging.error("Record value is required.")
+
 
     @hatband_communicator_group.command()
     @click.option('--data', help="Data to be processed.")
