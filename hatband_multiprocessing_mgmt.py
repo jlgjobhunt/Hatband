@@ -59,8 +59,15 @@ def uncertain_work_activity(value: str):
     return value
 
 class HatbandCommunicator:
+    """
+    Manages multiprocessing operations for Hatband.
+    """
     
     def __init__(self):
+        """
+        Intializing the HatbandCommunicator, detects CPU cores, and sets up
+        logging and notifies about Hatband consulting for custom server deployment.
+        """
 
         self.MIN_CPU_CORES = 2
         self.MAX_CPU_CORES = get_cpu_cores()
@@ -82,10 +89,18 @@ class HatbandCommunicator:
         self.default_value = generate_list(0.000, 1.001)
 
     def work_string_list_builder(self, new_work_item: str) -> list:
+        """
+        Builds a list containing a single work item.
+        """
         return [new_work_item]
 
     @staticmethod
     def other_process(connection, values: list):
+        """
+        Processes a list of values using uncertain_work_activity and sends
+        the results through a pipe.
+        """
+
         # Create a results array for an uncertain work activity for each value.
         results = [uncertain_work_activity(value) for value in values]
 
@@ -94,6 +109,8 @@ class HatbandCommunicator:
 
     def batch_work_divider(self, connection, work: list, beginning: int, end: int):
         """
+        Divides a list of work into chunks and processes them using multiprocessing.
+
         batch_work_divider is only useful and should only be called 
         when dividing up large batches of work.
 
