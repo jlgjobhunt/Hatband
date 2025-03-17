@@ -10,6 +10,7 @@ from multiprocessing import Pool
 from hatband_record_v0_005 import Record
 import click
 import logging
+import os
 import pickle
 
 
@@ -62,6 +63,33 @@ class HatbandCommunicatorCLI:
     """
 
     @multicpu_utilities.command()
+    @click.option('--input-type', type=click.Choice(['file', 'value']), default='file', help="Specify if the input is a file or a direct value.")
+    @click.option('--input', help="Path to input file containing the record value.")
+    def generate_key(input, input_type):
+        """Generates an index key for a Hatband record value."""
+        try:
+            if input_type == 'file':
+                if not os.path.exists(input):
+                    logging.error(f"File not found: {input}")
+                    return
+                with open(input, 'rb') as f:
+                    record_value = f.read().decode('utf-8')
+            else:
+                record_value = input
+                
+            index_key = generate_index_key(record_value)
+            click.echo(f"Index Key: {index_key}")
+
+        except FileNotFoundError:
+            if input == '' or ' ':
+                logging.error("An input file is required.")
+            else:
+                logging.error(f"File not found: {input}")
+        except Exception as e:
+            logging.error(f"DEBUGGING | Error: {e.__str__()}")
+
+
+    @multicpu_utilities.command()
     @click.option('--input-files', multiple=True, type=click.Path(exists=True), help="Path to input file containing content chunks.")
     def generate_keys(input_files):
         """Generates index keys for content chunks from multiple files."""
@@ -83,32 +111,6 @@ class HatbandCommunicatorCLI:
         else:
             logging.error("At least one input file is required.")
 
-    @multicpu_utilities.command()
-    @click.option('--input-file', type=click.Path(exists=True), help="Path to input file containing the record value.")
-    def generate_key(input_file):
-        """Generates an index key for a Hatband record value from a file."""
-        if input_file:
-            try:
-                with open(input_file, 'r') as f:
-                    record_value = f.read()
-                    index_key = generate_index_key(record_value)
-                    click.echo(f"Index Key: {index_key}")
-            except Exception as e:
-                logging.error(f"DEBUGGING | Error: {e}")
-        else:
-            click.echo("An input file is required.")
-
-    @multicpu_utilities.command()
-    @click.option('--record-value', help="The value of the Hatband record to generate a key for.")
-    def generate_key(record_value):
-        """Generates an index key for a single Hatband record value."""
-        if record_value:
-            try:
-                index_key = generate_index_key(record_value)
-                print("Index Key:", index_key)
-            except Exception as e:
-                logging.error("Record value is required.")
-
 
     @multicpu_utilities.command()
     @click.option('--data', help="Data to be processed.")
@@ -123,7 +125,6 @@ class HatbandCommunicatorCLI:
         else:
             logging.error("Data is required.")
 
-    
 
 if __name__ == "__main__":
     HatbandCommunicatorCLI.multicpu_utilities()
