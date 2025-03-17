@@ -1,11 +1,13 @@
 import click
-import sys
-import pickle
+import json
+import logging
 import os
 import shlex
+import sys
 
 
 from hatband_v0_005 import Hatband
+from hatband_record_v0_005 import Record
 from hatband_cli_multiprocessing_mgmt import HatbandCommunicatorCLI
 from hatband_multiprocessing_mgmt import HatbandCommunicator
 import hatband_multithreading_mgmt
@@ -24,15 +26,41 @@ def hatband_group():
 
 
 @hatband_group.command()
+@click.option('--hatband-name', required=True, help="Name of the Hatband.")
+@click.option('--key', required=True, help="Key of the record.")
+@click.option('--value', required=True, help="Value of the record.")
+def create_record(hatband_name, key, value):
+    """Creates a new record in the Hatband."""
+    hatband = Hatband(hatband_name)
+    record = hatband.add_record(key, value)
+    hatband.save_hatband_to_file(hatband.name, hatband.categories[record.short_index_key])
+
+    # DEBUGGING | REMOVE LATER
+    hatband_data = load_hatband_data(hatband_name)
+    logging.debug(f"DEBUGGING | Loaded data from hatband_storage/{hatband_name}.json | {json.dumps(hatband_data)}")
+
+def load_hatband_data(hatband_name):
+    hatband_file = os.path.join("hatband_storage", f"{hatband_name}.json")
+    if os.path.exists(hatband_file):
+        with open(hatband_file, 'r') as f:
+            return json.load(f)
+    return []
+
+def save_hatband_data(hatband_name, data):
+    hatband_file = os.path.join("hatband_storage", f"{hatband_name}.json")
+    with open(hatband_file, 'w') as f:
+        json.dump(data, f, indent=4)
+
+@hatband_group.command()
 @click.option('--hatband-name', required=True, help='Hatband category')
 @click.option('--key', required=True, help='Record key')
 @click.option('--value', required=True, help='Record value')
 @click.option('--storage-dir', default='hatband_storage', help='Storage directory')
-def insertl(hatband_name, key, value, storage_dir):    
+def insertl(hatband_name, key, value, storage_dir):
+    """
+    Insert record at the left.
+    """
     try:
-        """
-        Insert record at the left.
-        """
         hatband = Hatband(storage_dir=storage_dir)
         record = {'hatband': hatband_name, 'key': key, 'value': value}
         index = hatband.hatband_insertL(record)
@@ -71,7 +99,7 @@ def insertm(hatband_name, key, value, storage_dir):
 
 
 @hatband_group.command()
-@click.option('--hatband-name', required=True, help='Hatband category')
+@click.option('--hatband-name', required=True, help='Hatband category name')
 @click.option('--key', required=True, help='Record key')
 @click.option('--index', type=int, help='Record index (optional)')
 @click.option('--storage-dir', default='hatband_storage', help='Storage directory')
@@ -79,7 +107,7 @@ def retrieve(hatband_name, key, index, storage_dir):
     """
     Retrieve record
     """
-    hatband = Hatband(storage_dir=storage_dir)
+    hatband = Hatband(hatband_name, storage_dir=storage_dir)
     record, retrieved_index = hatband.hatband_retrieve(hatband_name, key, index)
     if record:
         click.echo(f"Retrieved record: {record}, at index: {retrieved_index}")
@@ -94,23 +122,27 @@ def list_records(hatband_name, storage_dir):
     Lists records in a Hatband category.
     """
     try:
-        hatband = Hatband(storage_dir=storage_dir)
+        hatband = Hatband(hatband_name)
         records = hatband.categories.get(hatband_name)
+
         if records:
             for record in records:
-                click.echo(record)
+                click.echo(json.dumps(record, indent=4))
         
         else:
             click.echo("No records found.")
+    except FileNotFoundError:
+        click.echo(f"Hatband '{hatband_name}' not found.")
     except Exception as e:
-        click.echo(f"DEBUGGING | Error: {e}")
+        click.echo(f"DEBUGGING | Error: {e.__str__()}")
 
 # Nest the multiprocessing CLI command group.
 hatband_group.add_command(HatbandCommunicatorCLI.multicpu_utilities)
 
 
 def run_interactive_cli():
-    hatband = Hatband()
+    hatband_name = input("Enter Hatband name: ")
+    hatband = Hatband(hatband_name)
     print("Welcome to Hatband CLI (now supporting multiple CPUs)!")
     while True:
         try:

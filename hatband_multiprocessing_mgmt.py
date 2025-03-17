@@ -11,8 +11,10 @@ import multiprocessing
 from multiprocessing import Process, Pipe
 
 import datetime
+import json
 import logging
 import math
+import os
 
 
 # Configure logging
@@ -151,6 +153,27 @@ class HatbandCommunicator:
         connection.send(combined)
         connection.close()
 
+    def logging_process(log_queue, log_file):
+        """Logging process that writes log entries to a JSONL file."""
+        while True:
+            log_entry = log_queue.get()
+            
+            if log_entry is None:
+                break
+        try:
+            with open(log_file, "a") as f:
+                f.write(json.dumps(log_entry) + "\n")
+        except Exception as e:
+            print(f"Logging error: {e}")
+
+    def log_message(log_queue, message, level="INFO"):
+        """Adds a log entry to the log queue."""
+        log_entry = {
+            "timestamp": datetime.datetime.now().isoformat(),
+            "level": level,
+            "message": message,
+        }
+        log_queue.put(log_entry)
 
 if __name__ == '__main__':
     
@@ -158,6 +181,12 @@ if __name__ == '__main__':
     work = [f"task_{i}" for i in range(1, 101)]
 
     if hatband_comm.MAX_CPU_CORES >= hatband_comm.MIN_CPU_CORES:
+
+        log_queue = multiprocessing.Queue()
+        log_file = "hatband_transactions.jsonl"
+        log_process = multiprocessing.Process(target=logging_process, args=(log_queue, log_file))
+        log_process.start()
+
         main_connection, other_connection = Pipe()
         other = Process(target=hatband_comm.batch_work_divider, args=(other_connection, work, 0, len(work)))
         other.start()
@@ -168,4 +197,5 @@ if __name__ == '__main__':
         logging.info("Running Hatband sequentially.")
         results = [uncertain_work_activity(task) for task in work]
         print(results)
+
 

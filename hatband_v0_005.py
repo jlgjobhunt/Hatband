@@ -1,7 +1,9 @@
-import math
 import json
+import logging
+import math
 import os
 
+from hatband_record_v0_005 import Record
 
 
 def floor(x):
@@ -11,7 +13,8 @@ class Hatband:
 
     version = "v0.005"
 
-    def __init__(self, storage_dir="hatband_storage", use_memory=False):
+    def __init__(self, name, storage_dir="hatband_storage", use_memory=False):
+        self.name = name
         self.storage_dir = storage_dir
         self.use_memory = use_memory
         if not self.use_memory:
@@ -248,6 +251,7 @@ class Hatband:
                 except json.JSONDecodeError:
                     print(f"DEBUGGING | {filepath} contains invalid JSON or is empty. Returning empty list.")
                     return []
+        logging.debug(f"DEBUGGING | File not found | {filepath}")
         return []
 
     def save_hatband_to_file(self, hatband_top_level_name, data):
@@ -367,6 +371,14 @@ class Hatband:
                 self._save_data(file_path, data)
                 return index
 
+    def add_record(self, key, value):
+        record = Record(value)
+        category_key = record.short_index_key
+        if category_key not in self.categories:
+            self.categories[category_key] = []
+        self.categories[category_key].append({'key': key, 'value': value})
+        logging.info(f"DEBUGGING | Record {key} added to category {category_key}. | value:\n\n{value}")
+        return record
 
     def hatband_retrieve(self, location, key, index=None):
         if self.use_memory:
@@ -419,8 +431,3 @@ class Hatband:
                         return target, i
                 return {}, -1
             
-
-
-
-def derived_key(content_chunk):
-    """"""

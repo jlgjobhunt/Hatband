@@ -19,10 +19,18 @@ class Record:
             raise ValueError("Content chunk must be at least 5 characters long.")
 
         self.content_chunk = content_chunk
+        self.value = content_chunk
         self.short_index_key = self._generate_short_index_key()
         self.medium_index_key = self._generate_medium_index_key()
         self.long_index_key = self._generate_long_index_key()
-        self.value = content_chunk
+        
+        if len(content_chunk) >= 50:
+            self.key = self.long_index_key
+        elif len(content_chunk) >= 25:
+            self.key = self.medium_index_key
+        else:
+            self.key = self.short_index_key
+        
 
     def _generate_short_index_key(self):
         """Generates a short index key."""
@@ -45,9 +53,15 @@ class Record:
             length (int): The desired length of the key.
 
         Returns:
-            str: The derived key.    
+            str: The derived key.
+            
+        Raises:
+            ValueError: If the length is invalid.
         
         """
+        if length < 0:
+            raise ValueError("Length must be a non-negative integer.")
+
         if len(content_chunk) >= length:
             return content_chunk[:length]
         else:
@@ -58,5 +72,6 @@ class Record:
             'short_index_key': self.short_index_key,
             'medium_index_key': self.medium_index_key,
             'long_index_key': self.long_index_key,
-            'value': self.value
+            'value': self.value,
+            'key': self.key
         }
