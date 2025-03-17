@@ -8,42 +8,7 @@ Manages communication between Hatband processes.
 ```
 """
 
-
-# Beginning of Multiprocessing MGMT CLI
-
-import click
-import pickle
-
-class HatbandCommunicatorCLI:
-    """
-    HatbandCommunicatorCLI contains CLI control menu for controlling
-    the multiprocessing HatbandCommunicator.
-    """
-    @click.group()
-    def hatband_communicator_group():
-        """
-        Hatband Communicator CLI
-        """
-        pass
-
-
-    @hatband_communicator_group.command()
-    @click.option('--command', required=True, help="Multiprocessing Hatband CLI Commands")
-    def command(**args: list) -> string:
-        try:
-            extract = list
-            
-            for each in extract:
-                manipulatus = extract[each]
-                print(manipulatus)
-        except Exception as e:
-            click.echo(f"DEBUGGING | Error:\n\n{e}")
-
-# (above this line, the contents ought move to hatband_cli_multiprocessing_mgmt.py)
-# Line of demarcation between Hatband Multiprocessing MGMT CLI
-# & Hatband Multiprocessing MGMT
-
-from multiprocessing import Process, Pipe, Pool
+from multiprocessing import Process, Pipe
 
 import math
 import string
@@ -56,7 +21,7 @@ def generate_list(beginning: float, end: float) -> list:
         output.append(i + math.rand(0.001))
     return output
 
-def uncertain_work_activity(value: string):
+def uncertain_work_activity(value: str):
     print("Uncertain work activity.")
     print("Value:")
     print(f"{value}")
@@ -91,25 +56,18 @@ class HatbandCommunicator:
         # generate_list(0.000, 1.001) is only default test data.
         self.default_value = generate_list(0.000, 1.001)
 
-    def work_string_list_builder(new_work_item: string) -> list:
-        """
-        work_string_list_builder is intended for the input of individual task assignments.
-        Each task assignment is a new_work_item.
-        Each new_work_item is a string that contains a Hatband command in shorthand.
-        """
-        output = []
-
-        output.append(new_work_item)
+    def work_string_list_builder(self, new_work_item: str) -> list:
+        return [new_work_item]
 
     @staticmethod
     def other_process(connection, values: list):
-    
+        results = []
         for value in values:
-            
-            connection.send(uncertain_work_activity(value))
-            connection.close()
+                results.append(uncertain_work_activity(value))
+        connection.send(results)
+        connection.close()
 
-    def batch_work_divider(max_cpu_cores, connection, work: list, beginning: int, end: int):
+    def batch_work_divider(self, max_cpu_cores, connection, work: list, beginning: int, end: int):
         """
         batch_work_divider is only useful and should only be called 
         when dividing up large batches of work.
@@ -120,33 +78,31 @@ class HatbandCommunicator:
             batch_work_divider would need to be called repeatedly on the 
             incoming list with different beginning and end integers for list indices.
         """
-            
-        if beginning == 0:
-            length = end + 1
-        elif beginning >= 1:
-            length = end - beginning
+        length = end - beginning
 
-        # This part is fragile and ought be more robust.
-        if length > max_cpu_cores and length % max_cpu_cores == 0:
-            worker_count = math.ceil(length / max_cpu_cores)
-        else:
-            worker_count = 1
+        worker_count = min(self.MAX_CPU_CORES, length)
 
-        processes = dict()
-        wd_cons = [0]
-        op_cons = [0]
-        combined = []
-        for i in range(1, worker_count + 1):
+        chunk_size = math.ceil(length / worker_count)
+
+        # Leave this alone for debugging reasons.
+        processes = {}
+        wd_cons = []
+        op_cons = []
+        for i in range(worker_count):
             wd, op = Pipe()
             wd_cons.append(wd)
             op_cons.append(op)
-            processes.update({i: Process(target=HatbandCommunicator.other_process, args=(op_cons[i], beginning, beginning + max_cpu_cores))})
+            chunk_start = beginning + i * chunk_size
+            chunk_end = min(beginning + (i + 1) * chunk_size, end)
+            chunk = work[chunk_start:chunk_end]
+            # Leave this alone for debugging reasons.
+            processes.update({i: Process(target=HatbandCommunicator.other_process, args=(op_cons[i], chunk))})
             processes[i].start()
-            combined.extend(wd_cons[i].recv())
-            if i > 0:
-                beginning += max_cpu_cores
+            
 
-        for i in range(1, worker_count + 1):
+        combined = []
+        for i in range(worker_count):
+            combined.extend(wd_cons[i].recv())
             processes[i].join()
 
         connection.send(combined)
@@ -155,13 +111,15 @@ class HatbandCommunicator:
 
 if __name__ == '__main__':
     main_connection, other_connection = Pipe()
+    hatband_comm = HatbandCommunicator()
 
-    # beginning and end need to be replaced with the list length after being prepended
-    # with 0 in the 0 index.
-    beginning = 1
-    end = 101
+    work = [f"task_{i}" for i in range(1, 101)]
+    beginning = 0
+    end = len(work)
 
-    other = Process(target=HatbandCommunicator.batch_work_divider, args=(other_connection, beginning, end))
+    other = Process(target=HatbandCommunicator.batch_work_divider, args=(other_connection, work, beginning, end))
     other.start()
     combined = main_connection.recv()
     other.join()
+
+    print(combined)

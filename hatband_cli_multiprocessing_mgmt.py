@@ -22,3 +22,37 @@ def generate_batch_index_keys(content_chunks):
         index_keys = pool.map(generate_index_key, content_chunks)
     return index_keys
 
+
+
+# Beginning of HatbandCommunicatorCLI
+
+import string
+
+import click
+import pickle
+
+
+class HatbandCommunicatorCLI:
+    """
+    HatbandCommunicatorCLI contains CLI control menu for controlling
+    the multiprocessing HatbandCommunicator.
+    """
+    @click.group()
+    def hatband_communicator_group():
+        """
+        Hatband Communicator CLI
+        """
+        pass
+
+
+    @hatband_communicator_group.command()
+    @click.option('--command', required=True, help="Multiprocessing Hatband CLI Commands")
+    def command(**args: list) -> str:
+        try:
+            extract = list
+            
+            for each in extract:
+                manipulatus = extract[each]
+                print(manipulatus)
+        except Exception as e:
+            click.echo(f"DEBUGGING | Error:\n\n{e}")

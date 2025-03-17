@@ -50,7 +50,7 @@ def work_divider(connection, beginning: int, end: int):
         processes[i].start()
         combined.extend(wd_cons[i].recv())
         if i > 0:
-            beginning += 10
+           beginning += 10
 
     for i in range(1, worker_count + 1):
         processes[i].join()
