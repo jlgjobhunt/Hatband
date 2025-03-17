@@ -7,11 +7,20 @@ Includes functions for parallelizing Hatband operations (e.g., index key generat
 Manages communication between Hatband processes.
 ```
 """
-
+import multiprocessing
 from multiprocessing import Process, Pipe
 
+import datetime
+import logging
 import math
-import string
+
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def get_cpu_cores() -> int:
+    """Returns the number of CPU cores."""
+    return multiprocessing.cpu_count()
 
 
 def generate_list(beginning: float, end: float) -> list:
@@ -22,10 +31,15 @@ def generate_list(beginning: float, end: float) -> list:
     return output
 
 def uncertain_work_activity(value: str):
-    print("Uncertain work activity.")
-    print("Value:")
-    print(f"{value}")
-    print("""
+    timestamp = datetime.datetime.now().isoformat()
+    logging.info("***UNCERTAIN WORK ACTIVITY: A TBD MISADVENTURE***")
+    logging.info(f"NOW:    {timestamp}")
+    logging.debug(value)
+
+    logging.info("VALUE:")
+    logging.info(f"{value}")
+    logging.info(
+        """
           This is a placeholder for implementing functions like: 
                 1) HatbandCommunicator CLI Multiprocessing-Dependent Commands
                     A) Hatband Record.key Generation - Single Key
@@ -39,19 +53,30 @@ def uncertain_work_activity(value: str):
           
                 **Future** LLM Hatband CLI decipherment using NLTK. ** Future Feature **
                 **Reason** LLM can get command almost right very often.
-          """)
+        """
+    )
     
-
+    return value
 
 class HatbandCommunicator:
-
+    
     def __init__(self):
+
+        self.MIN_CPU_CORES = 2
+        self.MAX_CPU_CORES = get_cpu_cores()
+        logging.info(f"Hatband Communicator's Minimum CPU Cores: {self.MIN_CPU_CORES} ")
+        logging.info(f"This system's number of CPU cores: {self.MAX_CPU_CORES}")
+        logging.info("Hatband has some features that require multiple CPU cores.")
+        logging.info("Hatband layers on the features that require multiple CPU cores.")
+        logging.info("For a hosted version of Hatband, contact joshua.greenfield@urgent-message.com for help.")
+        logging.info("Hatband can be hosted on both single and multi-core servers.")
+        logging.info("The LLMs that Hatband are intended for cannot be hosted on single CPU core servers.")
+
 
         # Find the max number of of CPU cores usable by multiprocessing.
         # 4 cores is a safe bet for all but duo-core.
         # The numbers below ought be replaced with a CPU core detection function call.
-        MIN_CPU_CORES = 2
-        MAX_CPU_CORES = 4
+        
 
         # generate_list(0.000, 1.001) is only default test data.
         self.default_value = generate_list(0.000, 1.001)
@@ -61,13 +86,13 @@ class HatbandCommunicator:
 
     @staticmethod
     def other_process(connection, values: list):
-        results = []
-        for value in values:
-                results.append(uncertain_work_activity(value))
+        # Create a results array for an uncertain work activity for each value.
+        results = [uncertain_work_activity(value) for value in values]
+
         connection.send(results)
         connection.close()
 
-    def batch_work_divider(self, max_cpu_cores, connection, work: list, beginning: int, end: int):
+    def batch_work_divider(self, connection, work: list, beginning: int, end: int):
         """
         batch_work_divider is only useful and should only be called 
         when dividing up large batches of work.
@@ -84,7 +109,6 @@ class HatbandCommunicator:
 
         chunk_size = math.ceil(length / worker_count)
 
-        # Leave this alone for debugging reasons.
         processes = {}
         wd_cons = []
         op_cons = []
@@ -96,7 +120,9 @@ class HatbandCommunicator:
             chunk_end = min(beginning + (i + 1) * chunk_size, end)
             chunk = work[chunk_start:chunk_end]
             # Leave this alone for debugging reasons.
-            processes.update({i: Process(target=HatbandCommunicator.other_process, args=(op_cons[i], chunk))})
+            # processes.update({i: Process(target=HatbandCommunicator.other_process, args=(op_cons[i], chunk))})
+            processes[i] = Process(target=HatbandCommunicator.other_process, args=(op_cons[i], chunk))
+            logging.debug(f"Starting process {i} with chunk:\n\n{chunk}")
             processes[i].start()
             
 
@@ -104,22 +130,25 @@ class HatbandCommunicator:
         for i in range(worker_count):
             combined.extend(wd_cons[i].recv())
             processes[i].join()
-
+            logging.debug(f"Process {i} joined.")
         connection.send(combined)
         connection.close()
 
 
 if __name__ == '__main__':
-    main_connection, other_connection = Pipe()
+    
     hatband_comm = HatbandCommunicator()
-
     work = [f"task_{i}" for i in range(1, 101)]
-    beginning = 0
-    end = len(work)
 
-    other = Process(target=HatbandCommunicator.batch_work_divider, args=(other_connection, work, beginning, end))
-    other.start()
-    combined = main_connection.recv()
-    other.join()
+    if hatband_comm.MAX_CPU_CORES >= hatband_comm.MIN_CPU_CORES:
+        main_connection, other_connection = Pipe()
+        other = Process(target=hatband_comm.batch_work_divider, args=(other_connection, work, 0, len(work)))
+        other.start()
+        combined = main_connection.recv()
+        other.join()
+        print(combined)
+    else:
+        logging.info("Running Hatband sequentially.")
+        results = [uncertain_work_activity(task) for task in work]
+        print(results)
 
-    print(combined)
