@@ -53,3 +53,8 @@ python hatband_cli_v0_004.py
 
 
 
+-------------------------
+
+
+
+python hatband_cli_v0_005.py multicpu generate-keys --input-files input_data_a.txt --input-files input_data_b.txt

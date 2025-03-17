@@ -2,10 +2,12 @@ import click
 import sys
 import pickle
 import os
+import shlex
 
 
 from hatband_v0_005 import Hatband
-import hatband_multiprocessing_mgmt
+from hatband_cli_multiprocessing_mgmt import HatbandCommunicatorCLI
+from hatband_multiprocessing_mgmt import HatbandCommunicator
 import hatband_multithreading_mgmt
 
 
@@ -16,7 +18,7 @@ HATBAND_FILE = 'hatband.pkl'
 @click.group()
 def hatband_group():
     """
-    Hatband CLI
+    Hatband CLI v0.005
     """
     pass
 
@@ -36,7 +38,7 @@ def insertl(hatband_name, key, value, storage_dir):
         index = hatband.hatband_insertL(record)
         click.echo(f"Inserted at index: {index}")
     except Exception as e:
-        click.echo(f"Error: {e}")
+        click.echo(f"DEBUGGING | Error: {e}")
 
 @hatband_group.command()
 @click.option('--hatband-name', required=True, help='Hatband category')
@@ -84,10 +86,32 @@ def retrieve(hatband_name, key, index, storage_dir):
     else:
         click.echo("Record not found.")
 
+@hatband_group.command()
+@click.option('--hatband-name', required=True, help='Hatband category')
+@click.option('--storage-dir', default='hatband_storage', help='Storage directory')
+def list_records(hatband_name, storage_dir):
+    """
+    Lists records in a Hatband category.
+    """
+    try:
+        hatband = Hatband(storage_dir=storage_dir)
+        records = hatband.categories.get(hatband_name)
+        if records:
+            for record in records:
+                click.echo(record)
+        
+        else:
+            click.echo("No records found.")
+    except Exception as e:
+        click.echo(f"DEBUGGING | Error: {e}")
+
+# Nest the multiprocessing CLI command group.
+hatband_group.add_command(HatbandCommunicatorCLI.multicpu_utilities)
+
 
 def run_interactive_cli():
     hatband = Hatband()
-    print("Welcome to Hatband CLI (Interactive Mode)!")
+    print("Welcome to Hatband CLI (now supporting multiple CPUs)!")
     while True:
         try:
             command_str = input("> ").strip()
@@ -98,76 +122,41 @@ def run_interactive_cli():
 
 
             try:
-                hatband_group(command_str.split())
+
+                command_list = shlex.split(command_str)
+
+                # Special handling for --help.
+                if command_list[0] == '--help':
+                    with hatband_group.make_context(None, []) as ctx:
+                        click.echo(hatband_group.get_help(ctx))
+                    continue
+
+                if not hatband_group.commands.get(command_list[0]) and not HatbandCommunicatorCLI.multicpu_utilities.commands.get(command_list[0]):
+                    click.echo(f"DEBUGGING | Error: No such command '{command_list[0]}'.")
+                    continue
+
+                hatband_group(command_list)
+
             except click.exceptions.NoSuchOption as e:
-                click.echo(f"Error: {e}")
+                click.echo(f"DEBUGGING | Error: {e}")
             except click.exceptions.BadParameter as e:
-                click.echo(f"Error: {e}")
+                click.echo(f"DEBUGGING | Error: {e}")
             except click.exceptions.UsageError as e:
-                click.echo(f"Error: {e}")
-            except SystemExit:
-                pass
+                click.echo(f"DEBUGGING | Error: {e}")
+            except SystemExit as e:
+                if e.code == 0:
+                    pass
+                else:
+                    click.echo(f"DEBUGGING | Error: {e}")
         except Exception as e:
-            click.echo(f"Error: {e}")
+            click.echo(f"DEBUGGING | Error: {e}")
+
     click.echo("Goodbye!")
 
 
-
-# Due to v0.003 complications with list_records,
-# it became necessary to attempt a manual equivalent.
-
-def list_records(args):
-    """Manually lists records based on command-line arguments."""
-
-    print(args)
-    hatband_name = None
-    storage_dir = 'hatband_storage'
-
-    # Isolate the problem:
-    if "--hatband-name" in args:
-        hatband_name_index = args.index("--hatband-name")
-        if hatband_name_index + 1 < len(args):
-            hatband_name = args[hatband_name_index + 1]
-        else:
-            print("Error: Missing value for --hatband-name")
-            return
-
-    if "--storage-dir" in args:
-        storage_dir_index = args.index("--storage-dir")
-        if storage_dir_index + 1 < len(args):
-            storage_dir = args[storage_dir_index + 1]
-        else:
-            print("Error: Missing value for --storage-dir")
-            return
-        
-    if hatband_name is None:
-        print("Error: --hatband-name is required.")
-        return
-
-    print(f"hatband_name: {hatband_name}")
-    print(f"storage_dir: {storage_dir}")
-    
-    try:
-        hatband = Hatband(storage_dir=storage_dir)
-        records = hatband.categories.get(hatband_name)
-        if records:
-            for record in records:
-                print(record)
-        else:
-            print("No records found.")
-    except Exception as e:
-        print(f"Error: {e}")
-
-    
-
-# Main has to be at the bottom to catch
-# what gooiness v0.004 has to throw at the wall.
-
 if __name__ == '__main__':
-    if len(sys.argv) > 1 and sys.argv[1] == 'list_records':
-        list_records(sys.argv[2:])
-    else:
-        run_interactive_cli()
-        print(click.get_current_context().command_path if click.has_current_context() else "No Click context")
-        hatband_group()
+        if len(sys.argv) > 1:
+            hatband_group()
+        else:
+            run_interactive_cli()
         

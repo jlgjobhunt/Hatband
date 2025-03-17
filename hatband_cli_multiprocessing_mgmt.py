@@ -39,8 +39,8 @@ class HatbandCommunicatorCLI:
     HatbandCommunicatorCLI contains CLI control menu for controlling
     the multiprocessing HatbandCommunicator.
     """
-    @click.group()
-    def hatband_communicator_group():
+    @click.group(name="multicpu")
+    def multicpu_utilities():
         """
         Hatband Communicator CLI
         """
@@ -48,7 +48,7 @@ class HatbandCommunicatorCLI:
 
     # Template for Click CLI command structure
     """
-    @hatband_communicator_group.command()
+    @multicpu_utilities.command()
     @click.option('--command', required=True, help="Multiprocessing Hatband CLI Commands")
     def command(**args: list) -> str:
         try:
@@ -61,24 +61,44 @@ class HatbandCommunicatorCLI:
             click.echo(f"DEBUGGING | Error:\n\n{e}")"
     """
 
-    @hatband_communicator_group.command()
-    @click.option('--input-file', help="Path to input file containing content chunks.")
-    def generate_keys(input_file):
-        """Generates index keys for content chunks from a file."""
-        if input_file:
+    @multicpu_utilities.command()
+    @click.option('--input-files', multiple=True, type=click.Path(exists=True), help="Path to input file containing content chunks.")
+    def generate_keys(input_files):
+        """Generates index keys for content chunks from multiple files."""
+        if input_files:
             try:
-                with open(input_file, 'rb') as f:
-                    content_chunks = pickle.load(f)
-                index_keys = generate_batch_index_keys(content_chunks)
-                print("Index Keys:", index_keys)
+                all_index_keys = []
+                for input_file in input_files:
+                    with open(input_file, 'rb') as f:
+                        content = f.read().decode('utf-8')
+                        content_chunks = [content]
+                        index_keys = generate_batch_index_keys(content_chunks)
+                        click.echo(f"Index Key (from {input_file}): {index_keys}")
+                        all_index_keys.extend(index_keys)
+                click.echo(f"All Index Keys: {all_index_keys}")
             except FileNotFoundError:
                 logging.error(f"File not found: {input_file}")
             except Exception as e:
-                logging.error("Input file is required.")
+                logging.error(f"DEBUGGING | Error: {e.__str__()}")
         else:
-            logging.error("Input file is required.")
+            logging.error("At least one input file is required.")
 
-    @hatband_communicator_group.command()
+    @multicpu_utilities.command()
+    @click.option('--input-file', type=click.Path(exists=True), help="Path to input file containing the record value.")
+    def generate_key(input_file):
+        """Generates an index key for a Hatband record value from a file."""
+        if input_file:
+            try:
+                with open(input_file, 'r') as f:
+                    record_value = f.read()
+                    index_key = generate_index_key(record_value)
+                    click.echo(f"Index Key: {index_key}")
+            except Exception as e:
+                logging.error(f"DEBUGGING | Error: {e}")
+        else:
+            click.echo("An input file is required.")
+
+    @multicpu_utilities.command()
     @click.option('--record-value', help="The value of the Hatband record to generate a key for.")
     def generate_key(record_value):
         """Generates an index key for a single Hatband record value."""
@@ -90,7 +110,7 @@ class HatbandCommunicatorCLI:
                 logging.error("Record value is required.")
 
 
-    @hatband_communicator_group.command()
+    @multicpu_utilities.command()
     @click.option('--data', help="Data to be processed.")
     def process_data(data):
         """Processes data."""
@@ -103,5 +123,7 @@ class HatbandCommunicatorCLI:
         else:
             logging.error("Data is required.")
 
+    
+
 if __name__ == "__main__":
-    HatbandCommunicatorCLI.hatband_communicator_group()
+    HatbandCommunicatorCLI.multicpu_utilities()
