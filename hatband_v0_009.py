@@ -1,9 +1,11 @@
+# hatband_v0_009.py
+
 import json
 import logging
 import math
 import os
 
-from hatband_record_v0_005 import Record
+from hatband_record_v0_009 import Record
 
 
 def floor(x):
@@ -11,7 +13,7 @@ def floor(x):
 
 class Hatband:
 
-    version = "v0.005"
+    version = "v0.009"
 
     def __init__(self, name, storage_dir="hatband_storage", use_memory=False):
         self.name = name

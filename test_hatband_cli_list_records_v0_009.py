@@ -1,4 +1,4 @@
-#   unit-test_hatband_cli_list_records_v0_005.py
+#   unit-test_hatband_cli_list_records_v0_009.py
 
 import pytest
 import os
@@ -7,8 +7,8 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-from hatband_v0_005 import Hatband
-from hatband_cli_v0_005 import list_records
+from hatband_v0_009 import Hatband
+from hatband_cli_v0_009 import list_records
 
 
 HATBAND_STORAGE = "test_hatband_storage"

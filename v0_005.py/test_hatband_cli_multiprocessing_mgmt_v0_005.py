@@ -3,7 +3,7 @@
 import pytest
 import sys
 import os
-from hatband_cli_multiprocessing_mgmt import generate_index_key, generate_batch_index_keys
+from hatband_cli_multiprocessing_mgmt_v0_009 import generate_index_key, generate_batch_index_keys
 from unittest.mock import patch, MagicMock
 
 

@@ -1,6 +1,6 @@
 import pytest
 import threading
-from hatband_cli_multithreading_mgmt import ReadWriteLock
+from hatband_cli_multithreading_mgmt_v0_009 import ReadWriteLock
 
 def test_read_write_lock():
     lock = ReadWriteLock()

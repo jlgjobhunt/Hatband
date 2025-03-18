@@ -5,18 +5,17 @@ import os
 
 
 
-# Import Click group from hatband_cli_v0_005
-from hatband_cli_v0_005 import hatband_group
+# Import Click group from hatband_cli_v0_009
+from hatband_cli_v0_009 import hatband_group
 
-print(os.path.abspath("hatband_cli_v0_005.py"))
+print(os.path.abspath("hatband_cli_v0_009.py"))
 
 HATBAND_STORAGE = "test_hatband_storage"
 
 
-
 class TestCli(unittest.TestCase):
 
-    version = "v0.005"
+    version = "v0.009"
 
     def setUp(self):
         self.runner = CliRunner()

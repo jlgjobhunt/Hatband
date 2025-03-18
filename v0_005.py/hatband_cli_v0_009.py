@@ -6,11 +6,11 @@ import shlex
 import sys
 
 
-from hatband_v0_005 import Hatband
-from hatband_record_v0_005 import Record
-from hatband_cli_multiprocessing_mgmt import HatbandCommunicatorCLI
-from hatband_multiprocessing_mgmt import HatbandCommunicator
-import hatband_multithreading_mgmt
+from hatband_v0_009 import Hatband
+from hatband_record_v0_009 import Record
+from hatband_cli_multiprocessing_mgmt_v0_009 import HatbandCommunicatorCLI
+from hatband_multiprocessing_mgmt_v0_009 import HatbandCommunicator
+import hatband_multithreading_mgmt_v0_009
 
 
 version = "v0.005"

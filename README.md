@@ -19,11 +19,16 @@ This work all contributes towards a larger project for two stealth stage startup
 
 ### Urgent-Message.com
 
+[joshua.greenfield@urgent-message.com](mailto:joshua.greenfield@urgent-message.com)
+
+
 ### Technologically-Assisted-Organism.com
 
 ### Frustration-Token.com
 
 ### 1099Coin.com  & 1099.co.in
+
+
 
 ## License
 
@@ -48,13 +53,11 @@ I originated hatband because I find data structures and algorithms interesting, 
 
 ###### A Note About Hatband Work Commencement With Google Gemini 2.0 Flash (Jimmy)
 
-It should be noted that this project to what extent it was brought to **Google Gemini 2.0 Flash**, began on **Friday, March 14, 2025** in a conversation that was aimed at the **Rochelle Gemma (Google Gemma 3 (Local : gemma-3-4b-it-Q4_K_M.gguf )**, so that a LLM that is locally hosted that may possess considerably longer context windows than tihs particular quantized **Google Gemma 3 (Local : gemma-3-4b-it-Q4_K_M.gguf )**, which supports 512 tokens. That is actually great except that wrappers are not bespoke unless one has the skill to make one bespoke. 
+It should be noted that this project to what extent it was brought to **Google Gemini 2.0 Flash**, began on **Friday, March 14, 2025** in a conversation that was aimed at the **Rochelle Gemma (Google Gemma 3 (Local : gemma-3-4b-it-Q4_K_M.gguf )**, so that a LLM that is locally hosted that may possess considerably longer context windows than tihs particular quantized **Google Gemma 3 (Local : gemma-3-4b-it-Q4_K_M.gguf )**, which supports 512 tokens. That is actually great except that wrappers are not bespoke unless one has the skill to make one bespoke.
 
 My R & D work is in exploratory programming and bringing prompt engineering to bear on work that I had rattling around in my head that was paused onto a cognitive load back burner one sleepless to sleepy overnight in the midst of more important things to deal with. To be able to so quickly accelerate development of an idea that I once called  Interobang in an early notebook paper sketch before a previous bout of homelessness caused those to be permanently lost (both originals and digital copies). There's no way that a chronically unstable and about to be unstable again person can put their engineering skills to work for profit generation fast enough to live in the United States of America as a freelancer without causing parents to go shopping for an early coffin or urn for that fateful prolonged adolescent's trip to Carousel. I jest in a sardonic way.
 
-This project actually dates back to 
-
-
+This project actually dates back to
 
 ### (aka Jimmy Gemini)
 

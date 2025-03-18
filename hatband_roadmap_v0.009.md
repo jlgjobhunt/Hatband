@@ -151,7 +151,12 @@ Great, the CLI is running again! Now, let's test the record creation functionali
    * Verify that the record you created is present in the JSON data.
 4. **Retrieve the record:**
 
-   * Enter the following at the prompt:
+   * Enter the following at the prompt:retrieve --hatband-name Joshua --key test_key
+     DEBUGGING | Loaded data from hatband_storage/test_hatband.json | [{'hatband': 'test_hatband', 'key': 'key1', 'value': 'value1'}, {'hatband': 'test_hatband', 'key': 'key1', 'value': 'value1'}, {'hatband': 'test_hatband', 'key': 'key1', 'value': 'value1'}, {'hatband': 'test_hatband', 'key': 'key3', 'value': 'value3'}, {'hatband': 'test_hatband', 'key': 'key3', 'value': 'value3'}, {'hatband': 'test_hatband', 'key': 'key3', 'value': 'value3'}, {'hatband': 'test_hatband', 'key': 'key3', 'value': 'value3'}, {'hatband': 'test_hatband', 'key': 'key3', 'value': 'value3'}, {'hatband': 'test_hatband', 'key': 'key3', 'value': 'value3'}, {'hatband': 'test_hatband', 'key': 'key2', 'value': 'value2'}, {'hatband': 'test_hatband', 'key': 'key2', 'value': 'value2'}, {'hatband': 'test_hatband', 'key': 'key2', 'value': 'value2'}]
+     DEBUGGING | Loaded data from hatband_storage/Joshua.json | [{'key': 'test_key', 'value': 'test_value'}]
+     DEBUGGING | Loaded data from hatband_storage/my_hatband.json | [{'hatband': 'my_hatband', 'key': 'another_key', 'value': 'another_value'}, {'hatband': 'my_hatband', 'key': 'my_key', 'value': 'my_value'}]
+     Debug: Loaded data from hatband_storage/Joshua.json: [{'key': 'test_key', 'value': 'test_value'}]
+     Retrieved record: {'key': 'test_key', 'value': 'test_value'}, at index: 0
 
    ```
    retrieve --hatband-name Joshua --key test_key
